@@ -1,12 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { LitElement, TemplateResult, css, html } from 'lit';
+
+import { newEditEvent } from '@omicronenergy/oscd-api/utils.js';
 
 import '@material/mwc-icon-button';
 import type { IconButton } from '@material/mwc-icon-button';
 
 import '@openscd/oscd-action-pane';
-
-import { newEditEvent } from '@openscd/open-scd-core';
 
 import './connectedap-editor.js';
 import './gse-editor.js';
@@ -54,7 +53,9 @@ export class SubNetworkEditor extends LitElement {
   @state()
   get bitrate(): string | null {
     const bitRate = this.element.querySelector('BitRate');
-    if (bitRate === null) return null;
+    if (bitRate === null) {
+      return null;
+    }
     const bitRateValue = bitRate.textContent;
     const m = bitRate.getAttribute('multiplier');
     const unit = ` ${m ?? ''}b/s`;
@@ -76,21 +77,26 @@ export class SubNetworkEditor extends LitElement {
   }
 
   removeElement(): void {
-    if (this.element) this.dispatchEvent(newEditEvent({ node: this.element }));
+    if (this.element) {
+      this.dispatchEvent(newEditEvent({ node: this.element }));
+    }
   }
 
   private renderSmvEditors(iedName: string): TemplateResult[] {
     return Array.from(
       this.element
         .closest('Communication')
-        ?.querySelectorAll(`ConnectedAP[iedName="${iedName}"] > SMV`) ?? []
+        ?.querySelectorAll(`ConnectedAP[iedName="${iedName}"] > SMV`) ?? [],
     ).map(
-      smv => html`<smv-editor
-        class="${smv.closest('SubNetwork') !== this.element ? 'disabled' : ''}"
-        .editCount=${this.editCount}
-        .doc=${this.doc}
-        .element=${smv}
-      ></smv-editor>`
+      smv =>
+        html`<smv-editor
+          class="${smv.closest('SubNetwork') !== this.element
+            ? 'disabled'
+            : ''}"
+          .editCount=${this.editCount}
+          .doc=${this.doc}
+          .element=${smv}
+        ></smv-editor>`,
     );
   }
 
@@ -98,22 +104,25 @@ export class SubNetworkEditor extends LitElement {
     return Array.from(
       this.element
         .closest('Communication')
-        ?.querySelectorAll(`ConnectedAP[iedName="${iedName}"] > GSE`) ?? []
+        ?.querySelectorAll(`ConnectedAP[iedName="${iedName}"] > GSE`) ?? [],
     ).map(
-      gse => html`<gse-editor
-        class="${gse.closest('SubNetwork') !== this.element ? 'disabled' : ''}"
-        .editCount=${this.editCount}
-        .doc=${this.doc}
-        .element=${gse}
-      ></gse-editor>`
+      gse =>
+        html`<gse-editor
+          class="${gse.closest('SubNetwork') !== this.element
+            ? 'disabled'
+            : ''}"
+          .editCount=${this.editCount}
+          .doc=${this.doc}
+          .element=${gse}
+        ></gse-editor>`,
     );
   }
 
   private renderConnectedApEditors(iedName: string): TemplateResult[] {
     return Array.from(
       this.element.parentElement?.querySelectorAll(
-        `:scope > SubNetwork > ConnectedAP[iedName="${iedName}"]`
-      ) ?? []
+        `:scope > SubNetwork > ConnectedAP[iedName="${iedName}"]`,
+      ) ?? [],
     ).map(
       connectedAP =>
         html`<connectedap-editor
@@ -121,7 +130,7 @@ export class SubNetworkEditor extends LitElement {
             ? 'disabled'
             : ''}"
           .element=${connectedAP}
-        ></connectedap-editor>`
+        ></connectedap-editor>`,
     );
   }
 
@@ -131,16 +140,19 @@ export class SubNetworkEditor extends LitElement {
       .filter((v, i, a) => a.indexOf(v) === i)
       .sort(compareNames)
       .map(
-        iedName => html` <oscd-action-pane id="iedSection" label="${iedName}">
-          ${this.renderConnectedApEditors(iedName)}${this.renderGseEditors(
-            iedName
-          )}${this.renderSmvEditors(iedName)}
-        </oscd-action-pane>`
+        iedName =>
+          html` <oscd-action-pane id="iedSection" label="${iedName}">
+            ${this.renderConnectedApEditors(iedName)}${this.renderGseEditors(
+              iedName,
+            )}${this.renderSmvEditors(iedName)}
+          </oscd-action-pane>`,
       );
   }
 
   private subNetworkSpecs(): string {
-    if (!this.type && !this.bitrate) return '';
+    if (!this.type && !this.bitrate) {
+      return '';
+    }
 
     return `(${[this.type, this.bitrate].filter(text => !!text).join(' — ')})`;
   }

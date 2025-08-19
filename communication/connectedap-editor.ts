@@ -1,5 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable import/no-extraneous-dependencies */
 import { LitElement, TemplateResult, html } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
@@ -8,7 +6,7 @@ import type { Fab } from '@material/mwc-fab';
 
 import '@openscd/oscd-action-icon';
 
-import { newEditEvent } from '@openscd/open-scd-core';
+import { newEditEvent } from '@omicronenergy/oscd-api/utils.js';
 import { newEditWizardEvent } from '../foundation.js';
 
 /** [[`Communication`]] subeditor for a `ConnectedAP` element. */
@@ -33,7 +31,9 @@ export class ConnectedAPEditor extends LitElement {
   }
 
   private removeElement(): void {
-    if (this.element) this.dispatchEvent(newEditEvent({ node: this.element }));
+    if (this.element) {
+      this.dispatchEvent(newEditEvent({ node: this.element }));
+    }
   }
 
   render(): TemplateResult {

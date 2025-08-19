@@ -1,8 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { LitElement, TemplateResult, html, svg } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 
-import { newEditEvent } from '@openscd/open-scd-core';
+import { newEditEvent } from '@omicronenergy/oscd-api/utils.js';
 
 import '@material/mwc-icon';
 import '@material/mwc-fab';
@@ -24,7 +23,7 @@ export class GseEditor extends LitElement {
   @state()
   get label(): string {
     return `${this.element.getAttribute('ldInst')}/${this.element.getAttribute(
-      'cbName'
+      'cbName',
     )}`;
   }
 
@@ -37,7 +36,9 @@ export class GseEditor extends LitElement {
   }
 
   removeElement(): void {
-    if (this.element) this.dispatchEvent(newEditEvent({ node: this.element }));
+    if (this.element) {
+      this.dispatchEvent(newEditEvent({ node: this.element }));
+    }
   }
 
   render(): TemplateResult {

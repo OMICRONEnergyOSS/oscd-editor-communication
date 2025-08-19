@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable no-undef */
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import { playwrightLauncher } from '@web/test-runner-playwright';
 
@@ -20,10 +20,10 @@ const filteredLogs = [
 ];
 
 const browsers = [
-     playwrightLauncher({ product: 'chromium' }),
-     playwrightLauncher({ product: 'firefox' }),
-     playwrightLauncher({ product: 'webkit' }),
-   ];
+  playwrightLauncher({ product: 'chromium' }),
+  playwrightLauncher({ product: 'firefox' }),
+  playwrightLauncher({ product: 'webkit' }),
+];
 
 function defaultGetImageDiff({ baselineImage, image, options }) {
   let error = '';
@@ -48,7 +48,14 @@ function defaultGetImageDiff({ baselineImage, image, options }) {
 
   const diff = new PNG({ width, height });
 
-  const numDiffPixels = pixelmatch(basePng.data, png.data, diff.data, width, height, options);
+  const numDiffPixels = pixelmatch(
+    basePng.data,
+    png.data,
+    diff.data,
+    width,
+    height,
+    options,
+  );
   const diffPercentage = (numDiffPixels / (width * height)) * 100;
 
   return {
@@ -62,18 +69,21 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   plugins: [
     visualRegressionPlugin({
       update: process.argv.includes('--update-visual-baseline'),
-      getImageDiff: (options) => {
-        const result =  defaultGetImageDiff(options);
-        if (result.diffPercentage < thresholdPercentage)
+      getImageDiff: options => {
+        const result = defaultGetImageDiff(options);
+        if (result.diffPercentage < thresholdPercentage) {
           result.diffPercentage = 0;
+        }
         return result;
-      }
+      },
     }),
   ],
 
-  files: 'dist/**/*.spec.js',
-
   groups: [
+    {
+      name: 'unit',
+      files: 'dist/**/*.spec.js',
+    },
     {
       name: 'visual',
       files: 'dist/**/*.test.js',

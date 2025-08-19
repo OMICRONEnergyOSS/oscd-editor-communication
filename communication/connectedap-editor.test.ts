@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { fixture, html } from '@open-wc/testing';
 
 import { sendMouse, setViewport } from '@web/test-runner-commands';
@@ -26,7 +25,7 @@ describe('ConnectedAP editor component', () => {
       .querySelector('ConnectedAP')!;
 
     editor = await fixture(
-      html`<connectedap-editor .element="${connAp}"></connectedap-editor>`
+      html`<connectedap-editor .element="${connAp}"></connectedap-editor>`,
     );
     document.body.style.width = '200';
     document.body.style.height = '200';
@@ -48,7 +47,7 @@ describe('ConnectedAP editor component', () => {
       await timeout(200);
       await visualDiff(
         document.body,
-        `connectedap-editor/#1 Unfocused connectedapd-editor`
+        `connectedap-editor/#1 Unfocused connectedapd-editor`,
       );
     });
   });
@@ -63,7 +62,7 @@ describe('ConnectedAP editor component', () => {
       await timeout(200);
       await visualDiff(
         document.body,
-        `connectedap-editor/#2 Focused connectedap-editor`
+        `connectedap-editor/#2 Focused connectedap-editor`,
       );
     });
   });

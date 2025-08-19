@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect, fixture, html } from '@open-wc/testing';
 import { SinonSpy, spy } from 'sinon';
 
@@ -7,12 +6,12 @@ import { isInsert } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 
 import { docBlob, missingCommunication } from './communication.testfiles.js';
 
-import SclCommunicationPlugin from './scl-communication.js';
+import SclCommunicationPlugin from './oscd-editor-communication.js';
 
 const doc = new DOMParser().parseFromString(docBlob, 'application/xml');
 const missComm = new DOMParser().parseFromString(
   missingCommunication,
-  'application/xml'
+  'application/xml',
 );
 
 describe('Scl Communication Plugin', () => {
@@ -24,7 +23,7 @@ describe('Scl Communication Plugin', () => {
 
   beforeEach(async () => {
     editor = await fixture(
-      html`<sc-communication-plugin .doc="${doc}"></sc-communication-plugin>`
+      html`<sc-communication-plugin .doc="${doc}"></sc-communication-plugin>`,
     );
 
     editEvent = spy();

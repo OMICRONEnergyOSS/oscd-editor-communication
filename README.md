@@ -1,16 +1,12 @@
-# \<scl-communication>
+[![Tests](https://github.com/OMICRONEnergyOSS/oscd-editor-communication/actions/workflows/test.yml/badge.svg)](https://github.com/OMICRONEnergyOSS/oscd-editor-communication/actions/workflows/test.yml) ![NPM Version](https://img.shields.io/npm/v/@omicronenergy/oscd-editor-communication)
 
-<img width="1506" alt="grafik" src="https://github.com/OpenEnergyTools/scl-editor/assets/66802940/ebb06f08-08c0-4b54-bb7c-3eed805eaf63">
+# \<oscd-editor-communication>
+
+This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
 
 ## What is this?
 
-This is an editor plugin for [open-scd-core](https://github.com/openscd/open-scd-core#readme), the new core editor engine for OpenSCD. With this plugin you can edit the element within the `Communication` section such as `SubNetwork`, `ConnectedAP`, `GSE` and `SMV`. Visit the [scl-editor](https://openenergytools.githuub.io/scl-editor) and see for yourself.
-
-## Missing features
-
-If you feel there is something missing you need please file an [issue](https://github.com/openenergytools/oscd-communication/issues).
-
-> NOTE: This plugin is create with a general approach. We are not aiming to add user-specific automation here. Please keep that in mind when filing issues.
+This is a basic menu plugin for [OpenSCD](https://openscd.org) which adds a menu item allowing users to safe files from the OpenSCD Editor. Start up a demo server with `npm run start` and see for yourself!
 
 ## Linting and formatting
 
@@ -27,6 +23,8 @@ npm run format
 ```
 
 ## Testing with Web Test Runner
+
+> This demo plugin does nothing much that could be tested as it relies exclusively on built-in browser components to do its job. We therefore currently have no tests. If you find something that could be tested, please feel free!
 
 To execute a single test run:
 
@@ -49,9 +47,13 @@ If you customize the configuration a lot, you can consider moving them to indivi
 ## Local Demo with `web-dev-server`
 
 ```bash
-npm start
+npm run start
 ```
 
 To run a local development server that serves the basic demo located in `demo/index.html`
 
-&copy; Jakob Vogelsang
+&copy; 2025 OMICRON electronics GmbH
+
+## License
+
+[Apache-2.0](LICENSE)

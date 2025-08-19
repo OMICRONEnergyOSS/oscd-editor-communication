@@ -1,0 +1,880 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "communication.testfiles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "docBlob",
+          "default": "`<SCL> <Communication> <SubNetwork name=\"SB\" desc=\"someDesc\" type=\"type\"> <BitRate unit=\"b/s\" multiplier=\"M\" >100</BitRate> <ConnectedAP iedName=\"ied1\" apName=\"AP1\" > <Address> </Address> <GSE ldInst=\"ldInst\" cbName=\"gse1\"> <Address> </Address> <MinTime unit=\"s\" multiplier=\"m\">10</MinTime> <MaxTime unit=\"s\" multiplier=\"m\">10</MaxTime> </GSE> </ConnectedAP> <ConnectedAP iedName=\"ied3\" apName=\"AP1\" > <Address> </Address> <GSE ldInst=\"ldInst\" cbName=\"gse3\"> <Address> </Address> <MinTime unit=\"s\" multiplier=\"m\">10</MinTime> <MaxTime unit=\"s\" multiplier=\"m\">10</MaxTime> </GSE> </ConnectedAP> <ConnectedAP iedName=\"ied2\" apName=\"AP1\" > <Address> </Address> <GSE ldInst=\"ldInst\" cbName=\"gse2\"> <Address> </Address> <MinTime unit=\"s\" multiplier=\"m\">10</MinTime> <MaxTime unit=\"s\" multiplier=\"m\">10</MaxTime> </GSE> </ConnectedAP> </SubNetwork> <SubNetwork name=\"PB1\"> <BitRate ></BitRate> <ConnectedAP iedName=\"ied1\" apName=\"AP2\" > <Address> </Address> <SMV ldInst=\"ldInst\" cbName=\"smv1\"> <Address> </Address> </SMV> </ConnectedAP> </SubNetwork> <SubNetwork name=\"PB2\"> </SubNetwork> </Communication> </SCL>`"
+        },
+        {
+          "kind": "variable",
+          "name": "missingCommunication",
+          "default": "`<SCL> <Heading id=\"missing Communication\" /> <IED name=\"IED1\" /> </SCL>`"
+        },
+        {
+          "kind": "variable",
+          "name": "orphanSubNetwork",
+          "default": "`<SubNetwork name=\"subNet\"> <ConnectedAP iedName=\"ied1\" apName=\"AP1\" > <Address> </Address> <GSE ldInst=\"ldInst\" cbName=\"gse1\"> <Address> </Address> <MinTime unit=\"s\" multiplier=\"m\">10</MinTime> <MaxTime unit=\"s\" multiplier=\"m\">10</MaxTime> </GSE> </ConnectedAP></SubNetwork>`"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "docBlob",
+          "declaration": {
+            "name": "docBlob",
+            "module": "communication.testfiles.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "missingCommunication",
+          "declaration": {
+            "name": "missingCommunication",
+            "module": "communication.testfiles.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "orphanSubNetwork",
+          "declaration": {
+            "name": "orphanSubNetwork",
+            "module": "communication.testfiles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "foundation.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "compareNames",
+          "return": {
+            "type": {
+              "text": "number"
+            }
+          },
+          "parameters": [
+            {
+              "name": "a",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "b",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "getChildElementsByTagName",
+          "return": {
+            "type": {
+              "text": "Element[]"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element | null | undefined"
+              }
+            },
+            {
+              "name": "tag",
+              "type": {
+                "text": "string | null | undefined"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "createElement",
+          "return": {
+            "type": {
+              "text": "Element"
+            }
+          },
+          "parameters": [
+            {
+              "name": "doc",
+              "type": {
+                "text": "Document"
+              }
+            },
+            {
+              "name": "tag",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "attrs",
+              "type": {
+                "text": "Record<string, string | null>"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "newEditWizardEvent",
+          "return": {
+            "type": {
+              "text": "EditWizardEvent"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "name": "subWizard",
+              "optional": true,
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "eventInitDict",
+              "optional": true,
+              "type": {
+                "text": "CustomEventInit<Partial<EditWizardRequest>>"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "newCreateWizardEvent",
+          "return": {
+            "type": {
+              "text": "CreateWizardEvent"
+            }
+          },
+          "parameters": [
+            {
+              "name": "parent",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "name": "tagName",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "subWizard",
+              "optional": true,
+              "type": {
+                "text": "boolean"
+              }
+            },
+            {
+              "name": "eventInitDict",
+              "optional": true,
+              "type": {
+                "text": "CustomEventInit<Partial<CreateWizardRequest>>"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "compareNames",
+          "declaration": {
+            "name": "compareNames",
+            "module": "foundation.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "getChildElementsByTagName",
+          "declaration": {
+            "name": "getChildElementsByTagName",
+            "module": "foundation.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "createElement",
+          "declaration": {
+            "name": "createElement",
+            "module": "foundation.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "newEditWizardEvent",
+          "declaration": {
+            "name": "newEditWizardEvent",
+            "module": "foundation.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "newCreateWizardEvent",
+          "declaration": {
+            "name": "newCreateWizardEvent",
+            "module": "foundation.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "oscd-editor-communication.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "OscdEditorCommunication",
+          "members": [
+            {
+              "kind": "field",
+              "name": "doc",
+              "type": {
+                "text": "XMLDocument | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "editCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1",
+              "attribute": "editCount"
+            },
+            {
+              "kind": "field",
+              "name": "add",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "createCommunication",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Element"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openCreateSubNetworkWizard",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "editCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1",
+              "fieldName": "editCount"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "OscdEditorCommunication",
+            "module": "oscd-editor-communication.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/connectedap-editor.spec.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/connectedap-editor.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "[[`Communication`]] subeditor for a `ConnectedAP` element.",
+          "name": "ConnectedAPEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Element"
+              },
+              "description": "SCL element ConnectedAP"
+            },
+            {
+              "kind": "field",
+              "name": "apName",
+              "type": {
+                "text": "string"
+              },
+              "description": "ConnectedAP attribute apName",
+              "readonly": true,
+              "attribute": "apName"
+            },
+            {
+              "kind": "field",
+              "name": "edit",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "delete",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openEditWizard",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeElement",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "apName",
+              "type": {
+                "text": "string"
+              },
+              "description": "ConnectedAP attribute apName",
+              "readonly": true,
+              "fieldName": "apName"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "connectedap-editor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConnectedAPEditor",
+          "declaration": {
+            "name": "ConnectedAPEditor",
+            "module": "communication/connectedap-editor.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "connectedap-editor",
+          "declaration": {
+            "name": "ConnectedAPEditor",
+            "module": "communication/connectedap-editor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/gse-editor.spec.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/gse-editor.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "GseEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "edit",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "delete",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openEditWizard",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeElement",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "gse-editor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "GseEditor",
+          "declaration": {
+            "name": "GseEditor",
+            "module": "communication/gse-editor.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "gse-editor",
+          "declaration": {
+            "name": "GseEditor",
+            "module": "communication/gse-editor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/smv-editor.spec.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/smv-editor.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "sizableSmvIcon",
+          "default": "svg` <svg viewBox=\"0 0 24 24\"> <path fill=\"currentColor\" d=\"M11,7H15V9H11V11H13A2,2 0 0,1 15,13V15A2,2 0 0,1 13,17H9V15H13V13H11A2,2 0 0,1 9,11V9A2,2 0 0,1 11,7M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z\" /> </svg>`"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SmvEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "doc",
+              "type": {
+                "text": "XMLDocument"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "edit",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "delete",
+              "type": {
+                "text": "Fab"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openEditWizard",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeElement",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "smv-editor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "sizableSmvIcon",
+          "declaration": {
+            "name": "sizableSmvIcon",
+            "module": "communication/smv-editor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "SmvEditor",
+          "declaration": {
+            "name": "SmvEditor",
+            "module": "communication/smv-editor.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "smv-editor",
+          "declaration": {
+            "name": "SmvEditor",
+            "module": "communication/smv-editor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/subnetwork-editor.spec.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/subnetwork-editor.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "[[`Communication`]] subeditor for a `SubNetwork` element.",
+          "name": "SubNetworkEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "doc",
+              "type": {
+                "text": "XMLDocument"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "editCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1",
+              "attribute": "editCount"
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Element"
+              },
+              "description": "SCL element SubNetwork"
+            },
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "description": "SubNetwork attribute name",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "desc",
+              "type": {
+                "text": "string | null"
+              },
+              "description": "SubNetwork attribute desc",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "type",
+              "type": {
+                "text": "string | null"
+              },
+              "description": "SubNetwork attribute type",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "bitrate",
+              "type": {
+                "text": "string | null"
+              },
+              "description": "SubNetwork child elements BitRate label",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "add",
+              "type": {
+                "text": "IconButton"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "edit",
+              "type": {
+                "text": "IconButton"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "delete",
+              "type": {
+                "text": "IconButton"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openCreateConnectedAPwizard",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openEditWizard",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeElement",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderSmvEditors",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult[]"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "iedName",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderGseEditors",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult[]"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "iedName",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderConnectedApEditors",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult[]"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "iedName",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "renderIEDs",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "TemplateResult[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "subNetworkSpecs",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "header",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "editCount",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1",
+              "fieldName": "editCount"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "subnetwork-editor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SubNetworkEditor",
+          "declaration": {
+            "name": "SubNetworkEditor",
+            "module": "communication/subnetwork-editor.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "subnetwork-editor",
+          "declaration": {
+            "name": "SubNetworkEditor",
+            "module": "communication/subnetwork-editor.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

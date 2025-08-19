@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect, fixture, html } from '@open-wc/testing';
 
 import { SinonSpy, spy } from 'sinon';
@@ -22,7 +21,7 @@ describe('ConnectedAP editor component', () => {
 
   beforeEach(async () => {
     editor = await fixture(
-      html`<connectedap-editor .element="${connAp}"></connectedap-editor>`
+      html`<connectedap-editor .element="${connAp}"></connectedap-editor>`,
     );
 
     editEvent = spy();

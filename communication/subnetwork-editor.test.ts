@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { fixture, html } from '@open-wc/testing';
 
 import { sendMouse, setViewport } from '@web/test-runner-commands';
@@ -28,7 +27,7 @@ describe('SubNetwork editor component', () => {
         .querySelector('SubNetwork')!;
 
       editor = await fixture(
-        html`<subnetwork-editor .element="${subnetwork}"></subnetwork-editor>`
+        html`<subnetwork-editor .element="${subnetwork}"></subnetwork-editor>`,
       );
       document.body.prepend(editor);
     });
@@ -45,7 +44,7 @@ describe('SubNetwork editor component', () => {
         await timeout(400);
         await visualDiff(
           document.body,
-          `subnetwork-editor/#1 Unfocused subnetwork-editor`
+          `subnetwork-editor/#1 Unfocused subnetwork-editor`,
         );
       });
     });
@@ -60,7 +59,7 @@ describe('SubNetwork editor component', () => {
         await timeout(400);
         await visualDiff(
           document.body,
-          `subnetwork-editor/#2 Focused subnetwork-editor`
+          `subnetwork-editor/#2 Focused subnetwork-editor`,
         );
       });
     });
@@ -73,7 +72,7 @@ describe('SubNetwork editor component', () => {
         .querySelector('SubNetwork')!;
 
       editor = await fixture(
-        html`<subnetwork-editor .element="${subnetwork}"></subnetwork-editor>`
+        html`<subnetwork-editor .element="${subnetwork}"></subnetwork-editor>`,
       );
       document.body.prepend(editor);
     });

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { fixture, html } from '@open-wc/testing';
 
 import { setViewport } from '@web/test-runner-commands';
@@ -7,7 +6,7 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 
 import { docBlob, missingCommunication } from './communication.testfiles.js';
 
-import SclCommunicationPlugin from './scl-communication.js';
+import SclCommunicationPlugin from './oscd-editor-communication.js';
 
 const factor = window.process && process.env.CI ? 4 : 2;
 function timeout(ms: number) {
@@ -25,7 +24,7 @@ describe('SclCommunication editor component', () => {
 
   beforeEach(async () => {
     editor = await fixture(
-      html`<sc-communication-plugin .doc="${doc}"></sc-communication-plugin>`
+      html`<sc-communication-plugin .doc="${doc}"></sc-communication-plugin>`,
     );
     document.body.prepend(editor);
   });
@@ -38,7 +37,7 @@ describe('SclCommunication editor component', () => {
     beforeEach(async () => {
       const missingComm = new DOMParser().parseFromString(
         missingCommunication,
-        'application/xml'
+        'application/xml',
       );
       editor.doc = missingComm;
     });
@@ -50,7 +49,7 @@ describe('SclCommunication editor component', () => {
       await timeout(400);
       await visualDiff(
         document.body,
-        `scl-communication-plugin/#1 Missing Communication section`
+        `scl-communication-plugin/#1 Missing Communication section`,
       );
     });
   });
@@ -63,7 +62,7 @@ describe('SclCommunication editor component', () => {
       await timeout(400);
       await visualDiff(
         document.body,
-        `scl-communication-plugin/#1 With default theming`
+        `scl-communication-plugin/#1 With default theming`,
       );
     });
   });
@@ -98,7 +97,7 @@ describe('SclCommunication editor component', () => {
       await timeout(400);
       await visualDiff(
         document.body,
-        `scl-communication-plugin/#2 With solarized theming`
+        `scl-communication-plugin/#2 With solarized theming`,
       );
     });
   });

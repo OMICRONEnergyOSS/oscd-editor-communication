@@ -1,11 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { LitElement, TemplateResult, css, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
+
+import { newEditEvent } from '@omicronenergy/oscd-api/utils.js';
 
 import '@material/mwc-fab';
 import type { Fab } from '@material/mwc-fab';
 
-import { newEditEvent } from '@openscd/open-scd-core';
 import { getReference } from '@openenergytools/scl-lib';
 
 import './communication/subnetwork-editor.js';
@@ -15,9 +15,9 @@ import {
   newCreateWizardEvent,
 } from './foundation.js';
 
-export default class SclCommunicationPlugin extends LitElement {
+export default class OscdEditorCommunication extends LitElement {
   @property({ attribute: false })
-  doc!: XMLDocument;
+  doc?: XMLDocument;
 
   @property({ type: Number })
   editCount = -1;
@@ -25,6 +25,9 @@ export default class SclCommunicationPlugin extends LitElement {
   @query('.action.add') add!: Fab;
 
   private createCommunication(): Element {
+    if (!this.doc) {
+      throw new Error('Document is not defined');
+    }
     const element: Element = createElement(this.doc, 'Communication', {});
     const scl = this.doc.documentElement;
 
@@ -33,12 +36,15 @@ export default class SclCommunicationPlugin extends LitElement {
         parent: scl,
         node: element,
         reference: getReference(scl, 'Communication'),
-      })
+      }),
     );
     return element;
   }
 
   private openCreateSubNetworkWizard(): void {
+    if (!this.doc) {
+      throw new Error('Document is not defined');
+    }
     const parent =
       this.doc.querySelector(':root > Communication') ||
       this.createCommunication();
@@ -47,9 +53,9 @@ export default class SclCommunicationPlugin extends LitElement {
   }
 
   render(): TemplateResult {
-    const communication = this.doc.querySelector('Communication');
+    const communication = this.doc?.querySelector('Communication');
 
-    if (!communication)
+    if (!communication) {
       return html`<h1>
         <span style="color: var(--oscd-base1)"
           >Missing Communication Section</span
@@ -61,6 +67,7 @@ export default class SclCommunicationPlugin extends LitElement {
           @click=${() => this.openCreateSubNetworkWizard()}
         ></mwc-fab>
       </h1>`;
+    }
 
     return html`<mwc-fab
         class="action add"
@@ -76,21 +83,21 @@ export default class SclCommunicationPlugin extends LitElement {
               .editCount=${this.editCount}
               .doc=${this.doc}
               .element=${subnetwork}
-            ></subnetwork-editor>`
+            ></subnetwork-editor>`,
         )}
       </section> `;
   }
 
   static styles = css`
     * {
-      --oscd-action-pane-theme-surface: var(--oscd-theme-base3);
-      --oscd-action-pane-theme-on-surface: var(--oscd-theme-base00);
-      --oscd-action-pane-theme-on-primary: var(--oscd-theme-base2);
+      --oscd-action-pane-theme-surface: var(--oscd-base3);
+      --oscd-action-pane-theme-on-surface: var(--oscd-base00);
+      --oscd-action-pane-theme-on-primary: var(--oscd-base2);
       --oscd-action-pane-theme-font: 'Roboto';
       --oscd-action-icon-theme-font: 'Roboto';
 
-      --oscd-action-icon-theme-on-surface: var(--oscd-theme-base00);
-      --oscd-action-icon-theme-on-primary: var(--oscd-theme-base2);
+      --oscd-action-icon-theme-on-surface: var(--oscd-base00);
+      --oscd-action-icon-theme-on-primary: var(--oscd-base2);
     }
 
     :host {

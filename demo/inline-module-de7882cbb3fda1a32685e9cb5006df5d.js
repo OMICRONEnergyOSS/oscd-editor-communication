@@ -38215,6 +38215,9 @@ class OscdEditorCommunication extends i$r {
         this.editCount = -1;
     }
     createCommunication() {
+        if (!this.doc) {
+            throw new Error('Document is not defined');
+        }
         const element = createElement(this.doc, 'Communication', {});
         const scl = this.doc.documentElement;
         this.dispatchEvent(newEditEvent({
@@ -38225,12 +38228,15 @@ class OscdEditorCommunication extends i$r {
         return element;
     }
     openCreateSubNetworkWizard() {
+        if (!this.doc) {
+            throw new Error('Document is not defined');
+        }
         const parent = this.doc.querySelector(':root > Communication') ||
             this.createCommunication();
         this.dispatchEvent(newCreateWizardEvent(parent, 'SubNetwork'));
     }
     render() {
-        const communication = this.doc.querySelector('Communication');
+        const communication = this.doc?.querySelector('Communication');
         if (!communication) {
             return x$6 `<h1>
         <span style="color: var(--oscd-base1)"

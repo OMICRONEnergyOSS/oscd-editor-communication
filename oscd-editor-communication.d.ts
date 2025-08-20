@@ -3,7 +3,7 @@ import '@material/mwc-fab';
 import type { Fab } from '@material/mwc-fab';
 import './communication/subnetwork-editor.js';
 export default class OscdEditorCommunication extends LitElement {
-    doc: XMLDocument;
+    doc?: XMLDocument;
     editCount: number;
     add: Fab;
     private createCommunication;

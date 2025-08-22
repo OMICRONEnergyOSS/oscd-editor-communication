@@ -6,8 +6,9 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 
 import { docBlob, orphanSubNetwork } from '../communication.testfiles.js';
 
-import './subnetwork-editor.js';
-import type { SubNetworkEditor } from './subnetwork-editor.js';
+import { SubNetworkEditor } from './SubNetworkEditor.js';
+
+customElements.define('subnetwork-editor', SubNetworkEditor);
 
 const factor = window.process && process.env.CI ? 4 : 2;
 function timeout(ms: number) {
@@ -17,10 +18,10 @@ function timeout(ms: number) {
 }
 mocha.timeout(2000 * factor);
 
-describe('SubNetwork editor component', () => {
+describe('Subnetwork editor component', () => {
   let editor: SubNetworkEditor;
 
-  describe('with valid SubNetwork passed', () => {
+  describe('with valid Subnetwork passed', () => {
     beforeEach(async () => {
       const subnetwork = new DOMParser()
         .parseFromString(docBlob, 'application/xml')
@@ -32,7 +33,7 @@ describe('SubNetwork editor component', () => {
       document.body.prepend(editor);
     });
 
-    afterEach(async () => {
+    afterEach(() => {
       editor.remove();
     });
 
@@ -77,7 +78,7 @@ describe('SubNetwork editor component', () => {
       document.body.prepend(editor);
     });
 
-    afterEach(async () => {
+    afterEach(() => {
       editor.remove();
     });
 

@@ -6,8 +6,8 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 
 import { docBlob } from '../communication.testfiles.js';
 
-import './gse-editor.js';
-import type { GseEditor } from './gse-editor.js';
+import './GseEditor.js';
+import type { GseEditor } from './GseEditor.js';
 
 const factor = window.process && process.env.CI ? 4 : 2;
 function timeout(ms: number) {

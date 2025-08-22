@@ -7,8 +7,10 @@ import { isRemove } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 
 import { docBlob } from '../communication.testfiles.js';
 
-import './gse-editor.js';
-import type { GseEditor } from './gse-editor.js';
+import { GseEditor } from './GseEditor.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+
+customElements.define('gse-editor', GseEditor);
 
 const gse = new DOMParser()
   .parseFromString(docBlob, 'application/xml')
@@ -23,24 +25,22 @@ describe('GSE editor component', () => {
     editor = await fixture(html`<gse-editor .element="${gse}"></gse-editor>`);
 
     editEvent = spy();
-    window.addEventListener('oscd-edit', editEvent);
-    window.addEventListener('oscd-edit-wizard-request', editEvent);
+    window.addEventListener('oscd-edit-v2', editEvent);
+    window.addEventListener(OscdEditDialogEvents.EDIT_EVENT, editEvent);
   });
 
   it('sends a wizard edit request', () => {
     editor.edit.click();
 
     expect(editEvent).to.have.been.calledOnce;
-
-    const editWizard = editEvent.args[0][0].detail;
-    expect(editWizard.element).to.equal(gse);
+    expect(editEvent.args[0][0].detail.element).to.equal(gse);
   });
 
   it('allows to remove an existing GSE element', () => {
     editor.delete.click();
 
     expect(editEvent).to.have.been.calledOnce;
-    expect(editEvent.args[0][0].detail).to.satisfy(isRemove);
-    expect(editEvent.args[0][0].detail.node.tagName).to.equal('GSE');
+    expect(editEvent.args[0][0].detail.edit).to.satisfy(isRemove);
+    expect(editEvent.args[0][0].detail.edit.node.tagName).to.equal('GSE');
   });
 });

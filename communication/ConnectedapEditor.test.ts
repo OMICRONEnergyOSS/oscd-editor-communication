@@ -6,8 +6,8 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 
 import { docBlob } from '../communication.testfiles.js';
 
-import './connectedap-editor.js';
-import type { ConnectedAPEditor } from './connectedap-editor.js';
+import { ConnectedAPEditor } from './ConnectedapEditor.js';
+customElements.define('connectedap-editor', ConnectedAPEditor);
 
 const factor = window.process && process.env.CI ? 4 : 2;
 function timeout(ms: number) {

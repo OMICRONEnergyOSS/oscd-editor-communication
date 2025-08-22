@@ -7,8 +7,9 @@ import { isRemove } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 
 import { docBlob } from '../communication.testfiles.js';
 
-import './connectedap-editor.js';
-import type { ConnectedAPEditor } from './connectedap-editor.js';
+import { ConnectedAPEditor } from './ConnectedapEditor.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+customElements.define('connectedap-editor', ConnectedAPEditor);
 
 const connAp = new DOMParser()
   .parseFromString(docBlob, 'application/xml')
@@ -25,8 +26,8 @@ describe('ConnectedAP editor component', () => {
     );
 
     editEvent = spy();
-    window.addEventListener('oscd-edit', editEvent);
-    window.addEventListener('oscd-edit-wizard-request', editEvent);
+    window.addEventListener('oscd-edit-v2', editEvent);
+    window.addEventListener(OscdEditDialogEvents.EDIT_EVENT, editEvent);
   });
 
   it('sends a wizard edit request', () => {
@@ -42,7 +43,9 @@ describe('ConnectedAP editor component', () => {
     editor.delete.click();
 
     expect(editEvent).to.have.been.calledOnce;
-    expect(editEvent.args[0][0].detail).to.satisfy(isRemove);
-    expect(editEvent.args[0][0].detail.node.tagName).to.equal('ConnectedAP');
+    expect(editEvent.args[0][0].detail.edit).to.satisfy(isRemove);
+    expect(editEvent.args[0][0].detail.edit.node.tagName).to.equal(
+      'ConnectedAP',
+    );
   });
 });

@@ -127,74 +127,6 @@
               }
             }
           ]
-        },
-        {
-          "kind": "function",
-          "name": "newEditWizardEvent",
-          "return": {
-            "type": {
-              "text": "EditWizardEvent"
-            }
-          },
-          "parameters": [
-            {
-              "name": "element",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "name": "subWizard",
-              "optional": true,
-              "type": {
-                "text": "boolean"
-              }
-            },
-            {
-              "name": "eventInitDict",
-              "optional": true,
-              "type": {
-                "text": "CustomEventInit<Partial<EditWizardRequest>>"
-              }
-            }
-          ]
-        },
-        {
-          "kind": "function",
-          "name": "newCreateWizardEvent",
-          "return": {
-            "type": {
-              "text": "CreateWizardEvent"
-            }
-          },
-          "parameters": [
-            {
-              "name": "parent",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "name": "tagName",
-              "type": {
-                "text": "string"
-              }
-            },
-            {
-              "name": "subWizard",
-              "optional": true,
-              "type": {
-                "text": "boolean"
-              }
-            },
-            {
-              "name": "eventInitDict",
-              "optional": true,
-              "type": {
-                "text": "CustomEventInit<Partial<CreateWizardRequest>>"
-              }
-            }
-          ]
         }
       ],
       "exports": [
@@ -221,22 +153,6 @@
             "name": "createElement",
             "module": "foundation.ts"
           }
-        },
-        {
-          "kind": "js",
-          "name": "newEditWizardEvent",
-          "declaration": {
-            "name": "newEditWizardEvent",
-            "module": "foundation.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "newCreateWizardEvent",
-          "declaration": {
-            "name": "newCreateWizardEvent",
-            "module": "foundation.ts"
-          }
         }
       ]
     },
@@ -251,9 +167,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'md-icon': MdIcon, 'md-fab': MdFab, 'subnetwork-editor': SubNetworkEditor, 'oscd-edit-dialog': OscdEditDialog, }"
+            },
+            {
+              "kind": "field",
               "name": "doc",
               "type": {
-                "text": "XMLDocument | undefined"
+                "text": "XMLDocument"
               }
             },
             {
@@ -269,7 +194,14 @@
               "kind": "field",
               "name": "add",
               "type": {
-                "text": "Fab"
+                "text": "MdFab"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "editDialog",
+              "type": {
+                "text": "OscdEditDialog | undefined"
               }
             },
             {
@@ -285,12 +217,7 @@
             {
               "kind": "method",
               "name": "openCreateSubNetworkWizard",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
+              "privacy": "private"
             }
           ],
           "attributes": [
@@ -301,6 +228,12 @@
               },
               "default": "-1",
               "fieldName": "editCount"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ScopedElementsMixin",
+              "package": "@open-wc/scoped-elements/lit-element.js"
             }
           ],
           "superclass": {
@@ -323,19 +256,37 @@
     },
     {
       "kind": "javascript-module",
-      "path": "communication/connectedap-editor.spec.ts",
+      "path": "communication/ConnectedapEditor.spec.ts",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "connectedap-editor",
+          "declaration": {
+            "name": "ConnectedAPEditor",
+            "module": "/communication/ConnectedapEditor.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
-      "path": "communication/connectedap-editor.ts",
+      "path": "communication/ConnectedapEditor.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "[[`Communication`]] subeditor for a `ConnectedAP` element.",
           "name": "ConnectedAPEditor",
           "members": [
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'md-fab': MdFab, 'md-icon': MdIcon, 'oscd-action-icon': OscdActionIcon, }"
+            },
             {
               "kind": "field",
               "name": "element",
@@ -346,26 +297,25 @@
             },
             {
               "kind": "field",
-              "name": "apName",
+              "name": "label",
               "type": {
                 "text": "string"
               },
               "description": "ConnectedAP attribute apName",
-              "readonly": true,
-              "attribute": "apName"
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "edit",
               "type": {
-                "text": "Fab"
+                "text": "MdFab"
               }
             },
             {
               "kind": "field",
               "name": "delete",
               "type": {
-                "text": "Fab"
+                "text": "MdFab"
               }
             },
             {
@@ -389,15 +339,10 @@
               }
             }
           ],
-          "attributes": [
+          "mixins": [
             {
-              "name": "apName",
-              "type": {
-                "text": "string"
-              },
-              "description": "ConnectedAP attribute apName",
-              "readonly": true,
-              "fieldName": "apName"
+              "name": "ScopedElementsMixin",
+              "package": "@open-wc/scoped-elements/lit-element.js"
             }
           ],
           "superclass": {
@@ -414,130 +359,44 @@
           "name": "ConnectedAPEditor",
           "declaration": {
             "name": "ConnectedAPEditor",
-            "module": "communication/connectedap-editor.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "connectedap-editor",
-          "declaration": {
-            "name": "ConnectedAPEditor",
-            "module": "communication/connectedap-editor.ts"
+            "module": "communication/ConnectedapEditor.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "communication/gse-editor.spec.ts",
+      "path": "communication/GseEditor.spec.ts",
       "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "communication/gse-editor.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "",
-          "name": "GseEditor",
-          "members": [
-            {
-              "kind": "field",
-              "name": "element",
-              "type": {
-                "text": "Element"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "edit",
-              "type": {
-                "text": "Fab"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "delete",
-              "type": {
-                "text": "Fab"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "openEditWizard",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "removeElement",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "gse-editor",
-          "customElement": true
-        }
-      ],
       "exports": [
-        {
-          "kind": "js",
-          "name": "GseEditor",
-          "declaration": {
-            "name": "GseEditor",
-            "module": "communication/gse-editor.ts"
-          }
-        },
         {
           "kind": "custom-element-definition",
           "name": "gse-editor",
           "declaration": {
             "name": "GseEditor",
-            "module": "communication/gse-editor.ts"
+            "module": "/communication/GseEditor.js"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "communication/smv-editor.spec.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
-      "path": "communication/smv-editor.ts",
+      "path": "communication/GseEditor.ts",
       "declarations": [
-        {
-          "kind": "variable",
-          "name": "sizableSmvIcon",
-          "default": "svg` <svg viewBox=\"0 0 24 24\"> <path fill=\"currentColor\" d=\"M11,7H15V9H11V11H13A2,2 0 0,1 15,13V15A2,2 0 0,1 13,17H9V15H13V13H11A2,2 0 0,1 9,11V9A2,2 0 0,1 11,7M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z\" /> </svg>`"
-        },
         {
           "kind": "class",
           "description": "",
-          "name": "SmvEditor",
+          "name": "GseEditor",
           "members": [
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'md-icon': MdIcon, 'md-fab': MdFab, 'oscd-action-icon': OscdActionIcon, }"
+            },
             {
               "kind": "field",
               "name": "doc",
@@ -564,14 +423,14 @@
               "kind": "field",
               "name": "edit",
               "type": {
-                "text": "Fab"
+                "text": "MdFab"
               }
             },
             {
               "kind": "field",
               "name": "delete",
               "type": {
-                "text": "Fab"
+                "text": "MdFab"
               }
             },
             {
@@ -595,6 +454,132 @@
               }
             }
           ],
+          "mixins": [
+            {
+              "name": "ScopedElementsMixin",
+              "package": "@open-wc/scoped-elements/lit-element.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "gse-editor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "GseEditor",
+          "declaration": {
+            "name": "GseEditor",
+            "module": "communication/GseEditor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/SmvEditor.spec.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "smv-editor",
+          "declaration": {
+            "name": "SmvEditor",
+            "module": "/communication/SmvEditor.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "communication/SmvEditor.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "sizableSmvIcon",
+          "default": "svg` <svg viewBox=\"0 0 24 24\"> <path fill=\"currentColor\" d=\"M11,7H15V9H11V11H13A2,2 0 0,1 15,13V15A2,2 0 0,1 13,17H9V15H13V13H11A2,2 0 0,1 9,11V9A2,2 0 0,1 11,7M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z\" /> </svg>`"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SmvEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'md-icon': MdIcon, 'md-fab': MdFab, 'oscd-action-icon': OscdActionIcon, }"
+            },
+            {
+              "kind": "field",
+              "name": "doc",
+              "type": {
+                "text": "XMLDocument"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "edit",
+              "type": {
+                "text": "MdFab"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "delete",
+              "type": {
+                "text": "MdFab"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "openEditWizard",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "removeElement",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ScopedElementsMixin",
+              "package": "@open-wc/scoped-elements/lit-element.js"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -609,7 +594,7 @@
           "name": "sizableSmvIcon",
           "declaration": {
             "name": "sizableSmvIcon",
-            "module": "communication/smv-editor.ts"
+            "module": "communication/SmvEditor.ts"
           }
         },
         {
@@ -617,34 +602,44 @@
           "name": "SmvEditor",
           "declaration": {
             "name": "SmvEditor",
-            "module": "communication/smv-editor.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "smv-editor",
-          "declaration": {
-            "name": "SmvEditor",
-            "module": "communication/smv-editor.ts"
+            "module": "communication/SmvEditor.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "communication/subnetwork-editor.spec.ts",
+      "path": "communication/SubNetworkEditor.spec.ts",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "subnetwork-editor",
+          "declaration": {
+            "name": "SubNetworkEditor",
+            "module": "/communication/SubNetworkEditor.js"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",
-      "path": "communication/subnetwork-editor.ts",
+      "path": "communication/SubNetworkEditor.ts",
       "declarations": [
         {
           "kind": "class",
           "description": "[[`Communication`]] subeditor for a `SubNetwork` element.",
           "name": "SubNetworkEditor",
           "members": [
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'oscd-action-pane': OscdActionPane, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'smv-editor': SmvEditor, 'gse-editor': GseEditor, 'connectedap-editor': ConnectedAPEditor, }"
+            },
             {
               "kind": "field",
               "name": "doc",
@@ -709,21 +704,21 @@
               "kind": "field",
               "name": "add",
               "type": {
-                "text": "IconButton"
+                "text": "MdIconButton"
               }
             },
             {
               "kind": "field",
               "name": "edit",
               "type": {
-                "text": "IconButton"
+                "text": "MdIconButton"
               }
             },
             {
               "kind": "field",
               "name": "delete",
               "type": {
-                "text": "IconButton"
+                "text": "MdIconButton"
               }
             },
             {
@@ -849,6 +844,12 @@
               "fieldName": "editCount"
             }
           ],
+          "mixins": [
+            {
+              "name": "ScopedElementsMixin",
+              "package": "@open-wc/scoped-elements/lit-element.js"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -863,15 +864,7 @@
           "name": "SubNetworkEditor",
           "declaration": {
             "name": "SubNetworkEditor",
-            "module": "communication/subnetwork-editor.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "subnetwork-editor",
-          "declaration": {
-            "name": "SubNetworkEditor",
-            "module": "communication/subnetwork-editor.ts"
+            "module": "communication/SubNetworkEditor.ts"
           }
         }
       ]

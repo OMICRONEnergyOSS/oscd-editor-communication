@@ -6,7 +6,8 @@ import { isInsert } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 
 import { docBlob, missingCommunication } from './communication.testfiles.js';
 
-import SclCommunicationPlugin from './oscd-editor-communication.js';
+import OscdEditorCommunication from './oscd-editor-communication.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
 
 const doc = new DOMParser().parseFromString(docBlob, 'application/xml');
 const missComm = new DOMParser().parseFromString(
@@ -15,20 +16,29 @@ const missComm = new DOMParser().parseFromString(
 );
 
 describe('Scl Communication Plugin', () => {
-  customElements.define('sc-communication-plugin', SclCommunicationPlugin);
+  customElements.define('oscd-editor-communication', OscdEditorCommunication);
 
-  let editor: SclCommunicationPlugin;
+  let editor: OscdEditorCommunication;
 
   let editEvent: SinonSpy;
 
   beforeEach(async () => {
     editor = await fixture(
-      html`<sc-communication-plugin .doc="${doc}"></sc-communication-plugin>`,
+      html`<oscd-editor-communication
+        .doc="${doc}"
+      ></oscd-editor-communication>`,
     );
 
     editEvent = spy();
-    window.addEventListener('oscd-edit', editEvent);
-    window.addEventListener('oscd-create-wizard-request', editEvent);
+    editor.addEventListener('oscd-edit-v2', event => {
+      editEvent(event);
+      editor.editCount += 1;
+    });
+    editor.addEventListener(OscdEditDialogEvents.CREATE_EVENT, editEvent);
+  });
+
+  afterEach(() => {
+    editor.remove();
   });
 
   it('sends a wizard create request on Fab click', () => {
@@ -36,8 +46,8 @@ describe('Scl Communication Plugin', () => {
 
     expect(editEvent).to.have.been.calledOnce;
 
-    const editWizard = editEvent.args[0][0].detail;
-    expect(editWizard.parent).to.equal(doc.querySelector('Communication'));
+    const eventDetails = editEvent.args[0][0].detail;
+    expect(eventDetails.parent).to.equal(doc.querySelector('Communication'));
   });
 
   it('create a Communication section parent element when missing', async () => {
@@ -48,7 +58,7 @@ describe('Scl Communication Plugin', () => {
 
     expect(editEvent).to.have.been.calledTwice;
 
-    const insert = editEvent.args[0][0].detail;
+    const insert = editEvent.args[0][0].detail.edit;
     expect(insert).to.satisfy(isInsert);
 
     const createRequest = editEvent.args[1][0].detail;

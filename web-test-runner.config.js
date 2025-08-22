@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { visualRegressionPlugin } from '@web/test-runner-visual-regression/plugin';
 import { playwrightLauncher } from '@web/test-runner-playwright';
+import { polyfill } from '@web/dev-server-polyfill';
 
 import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
@@ -13,11 +14,7 @@ console.assert(!fuzzy, 'Running on OS with 1% test pixel diff threshold!');
 
 const thresholdPercentage = fuzzy && local ? 1 : 0;
 
-const filteredLogs = [
-  'Running in dev mode',
-  'Lit is in dev mode',
-  'mwc-list-item scheduled an update',
-];
+const filteredLogs = ['Running in dev mode', 'Lit is in dev mode'];
 
 const browsers = [
   playwrightLauncher({ product: 'chromium' }),
@@ -77,21 +74,28 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
         return result;
       },
     }),
+    polyfill({
+      scopedCustomElementRegistry: true,
+    }),
   ],
+  testsFinishTimeout: 15000,
 
   groups: [
     {
       name: 'unit',
       files: 'dist/**/*.spec.js',
+      browsers: [playwrightLauncher({ product: 'chromium' })],
     },
     {
       name: 'visual',
       files: 'dist/**/*.test.js',
+      /** Browsers to run tests on */
+      browsers,
       testRunnerHtml: testFramework => `
         <html>
           <head>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&family=Roboto:wght@300;400;500&display=swap">
-            <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Symbols+Outlined&display=block" />
           </head>
           <body>
             <style class="deanimator">
@@ -181,10 +185,7 @@ export default /** @type {import("@web/test-runner").TestRunnerConfig} */ ({
   concurrentBrowsers: 3,
 
   /** Amount of test files per browser to test concurrently */
-  concurrency: 2,
-
-  /** Browsers to run tests on */
-  browsers,
+  concurrency: 1,
 
   // See documentation for all available options
 });

@@ -2,11 +2,13 @@
 
 # \<oscd-editor-communication>
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
-
 ## What is this?
 
-This is a basic menu plugin for [OpenSCD](https://openscd.org) which adds a menu item allowing users to safe files from the OpenSCD Editor. Start up a demo server with `npm run start` and see for yourself!
+This is an editor plugin for the [OpenSCD](https://openscd.org) tool. With this plugin you can edit elements within the `Communication` section such as `SubNetwork`, `ConnectedAP`, `GSE` and `SMV`. Visit the [demo page](https://OMICRONEnergyOSS.githuub.io/oscd-editor-communication/demo/index.html) and see for yourself.
+
+## Missing features
+
+If you feel there is something missing you need please file an [issue](https://OMICRONEnergyOSS.githuub.io/oscd-editor-communication/issues).
 
 ## Linting and formatting
 
@@ -52,6 +54,7 @@ npm run start
 
 To run a local development server that serves the basic demo located in `demo/index.html`
 
+&copy; Jakob Vogelsang
 &copy; 2025 OMICRON electronics GmbH
 
 ## License

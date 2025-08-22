@@ -6,8 +6,8 @@ import { visualDiff } from '@web/test-runner-visual-regression';
 
 import { docBlob } from '../communication.testfiles.js';
 
-import './smv-editor.js';
-import type { SmvEditor } from './smv-editor.js';
+import './SmvEditor.js';
+import type { SmvEditor } from './SmvEditor.js';
 
 const factor = window.process && process.env.CI ? 4 : 2;
 function timeout(ms: number) {

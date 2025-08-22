@@ -1,28 +1,63 @@
 import { LitElement, TemplateResult, css, html } from 'lit';
 import { property, query } from 'lit/decorators.js';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
-import { newEditEvent } from '@omicronenergy/oscd-api/utils.js';
-
-import '@material/mwc-fab';
-import type { Fab } from '@material/mwc-fab';
+import { MdFab } from '@scopedelement/material-web/fab/MdFab.js';
+import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 
 import { getReference } from '@openenergytools/scl-lib';
+import { newEditEventV2 } from '@omicronenergy/oscd-api/utils.js';
+import OscdEditDialog from '@omicronenergy/oscd-edit-dialog/OscdEditDialog.js';
+import type {
+  CreateWizard,
+  EditWizard,
+} from '@omicronenergy/oscd-edit-dialog/OscdEditDialog.js';
 
-import './communication/subnetwork-editor.js';
 import {
-  createElement,
-  getChildElementsByTagName,
-  newCreateWizardEvent,
-} from './foundation.js';
+  newEditDialogCreateEvent,
+  OscdEditDialogEvents,
+} from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
 
-export default class OscdEditorCommunication extends LitElement {
+import { SubNetworkEditor } from './communication/SubNetworkEditor.js';
+import { createElement, getChildElementsByTagName } from './foundation.js';
+
+export default class OscdEditorCommunication extends ScopedElementsMixin(
+  LitElement,
+) {
+  static scopedElements = {
+    'md-icon': MdIcon,
+    'md-fab': MdFab,
+    'subnetwork-editor': SubNetworkEditor,
+    'oscd-edit-dialog': OscdEditDialog,
+  };
+
   @property({ attribute: false })
-  doc?: XMLDocument;
+  doc!: XMLDocument;
 
   @property({ type: Number })
   editCount = -1;
 
-  @query('.action.add') add!: Fab;
+  @query('.action.add') add!: MdFab;
+
+  @query('oscd-edit-dialog') editDialog?: OscdEditDialog;
+
+  connectedCallback(): void {
+    super.connectedCallback();
+    this.addEventListener(OscdEditDialogEvents.CREATE_EVENT, ((
+      event: CustomEvent<CreateWizard>,
+    ) => {
+      this.editDialog?.create(event.detail).then(edits => {
+        this.dispatchEvent(newEditEventV2(edits));
+      });
+    }) as EventListener);
+    this.addEventListener(OscdEditDialogEvents.EDIT_EVENT, ((
+      event: CustomEvent<EditWizard>,
+    ) => {
+      this.editDialog?.edit(event.detail).then(edits => {
+        this.dispatchEvent(newEditEventV2(edits));
+      });
+    }) as EventListener);
+  }
 
   private createCommunication(): Element {
     if (!this.doc) {
@@ -32,16 +67,17 @@ export default class OscdEditorCommunication extends LitElement {
     const scl = this.doc.documentElement;
 
     this.dispatchEvent(
-      newEditEvent({
+      newEditEventV2({
         parent: scl,
         node: element,
         reference: getReference(scl, 'Communication'),
       }),
     );
+
     return element;
   }
 
-  private openCreateSubNetworkWizard(): void {
+  private async openCreateSubNetworkWizard() {
     if (!this.doc) {
       throw new Error('Document is not defined');
     }
@@ -49,7 +85,7 @@ export default class OscdEditorCommunication extends LitElement {
       this.doc.querySelector(':root > Communication') ||
       this.createCommunication();
 
-    this.dispatchEvent(newCreateWizardEvent(parent, 'SubNetwork'));
+    this.dispatchEvent(newEditDialogCreateEvent(parent, 'SubNetwork'));
   }
 
   render(): TemplateResult {
@@ -57,25 +93,26 @@ export default class OscdEditorCommunication extends LitElement {
 
     if (!communication) {
       return html`<h1>
-        <span style="color: var(--oscd-base1)"
-          >Missing Communication Section</span
-        ><mwc-fab
-          class="action add"
-          extended
-          icon="add"
-          label="Add SubNetwork"
-          @click=${() => this.openCreateSubNetworkWizard()}
-        ></mwc-fab>
-      </h1>`;
+          <span style="color: var(--oscd-base1)"
+            >Missing Communication Section</span
+          ><md-fab
+            class="action add"
+            extended
+            icon="add"
+            label="Add SubNetwork"
+            @click=${() => this.openCreateSubNetworkWizard()}
+          ></md-fab>
+        </h1>
+        <oscd-edit-dialog></oscd-edit-dialog>`;
     }
 
-    return html`<mwc-fab
+    return html`<md-fab
         class="action add"
         extended
         icon="add"
         label="Add SubNetwork"
         @click=${() => this.openCreateSubNetworkWizard()}
-      ></mwc-fab>
+      ></md-fab>
       <section>
         ${getChildElementsByTagName(communication, 'SubNetwork').map(
           subnetwork =>
@@ -85,19 +122,23 @@ export default class OscdEditorCommunication extends LitElement {
               .element=${subnetwork}
             ></subnetwork-editor>`,
         )}
-      </section> `;
+      </section>
+      <oscd-edit-dialog></oscd-edit-dialog> `;
   }
 
   static styles = css`
     * {
       --oscd-action-pane-theme-surface: var(--oscd-base3);
       --oscd-action-pane-theme-on-surface: var(--oscd-base00);
+      --oscd-action-pane-theme-primary: var(--oscd-base00);
       --oscd-action-pane-theme-on-primary: var(--oscd-base2);
       --oscd-action-pane-theme-font: 'Roboto';
-      --oscd-action-icon-theme-font: 'Roboto';
 
+      --oscd-action-icon-theme-surface: var(--oscd-base0);
       --oscd-action-icon-theme-on-surface: var(--oscd-base00);
+      --oscd-action-icon-theme-primary: var(--oscd-base01);
       --oscd-action-icon-theme-on-primary: var(--oscd-base2);
+      --oscd-action-icon-theme-font: 'Roboto';
     }
 
     :host {
@@ -128,7 +169,7 @@ export default class OscdEditorCommunication extends LitElement {
       margin: 8px 12px 16px;
     }
 
-    mwc-fab {
+    md-fab {
       position: fixed;
       bottom: 32px;
       right: 32px;

@@ -7,8 +7,10 @@ import { isRemove } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 
 import { docBlob } from '../communication.testfiles.js';
 
-import './subnetwork-editor.js';
-import type { SubNetworkEditor } from './subnetwork-editor.js';
+import { SubNetworkEditor } from './SubNetworkEditor.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+
+customElements.define('subnetwork-editor', SubNetworkEditor);
 
 const subNet = new DOMParser()
   .parseFromString(docBlob, 'application/xml')
@@ -25,9 +27,9 @@ describe('SubNetwork editor component', () => {
     );
 
     editEvent = spy();
-    window.addEventListener('oscd-edit', editEvent);
-    window.addEventListener('oscd-edit-wizard-request', editEvent);
-    window.addEventListener('oscd-create-wizard-request', editEvent);
+    window.addEventListener('oscd-edit-v2', editEvent);
+    window.addEventListener(OscdEditDialogEvents.EDIT_EVENT, editEvent);
+    window.addEventListener(OscdEditDialogEvents.CREATE_EVENT, editEvent);
   });
 
   it('sends a wizard edit request', () => {
@@ -53,7 +55,9 @@ describe('SubNetwork editor component', () => {
     editor.delete.click();
 
     expect(editEvent).to.have.been.calledOnce;
-    expect(editEvent.args[0][0].detail).to.satisfy(isRemove);
-    expect(editEvent.args[0][0].detail.node.tagName).to.equal('SubNetwork');
+    expect(editEvent.args[0][0].detail.edit).to.satisfy(isRemove);
+    expect(editEvent.args[0][0].detail.edit.node.tagName).to.equal(
+      'SubNetwork',
+    );
   });
 });

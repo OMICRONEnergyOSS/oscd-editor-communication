@@ -1,26 +1,33 @@
 import { LitElement, TemplateResult, css, html } from 'lit';
+import { property, query, state } from 'lit/decorators.js';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
-import { newEditEvent } from '@omicronenergy/oscd-api/utils.js';
+import { MdIconButton } from '@scopedelement/material-web/iconbutton/MdIconButton.js';
+import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 
-import '@material/mwc-icon-button';
-import type { IconButton } from '@material/mwc-icon-button';
-
-import '@openscd/oscd-action-pane';
-
-import './connectedap-editor.js';
-import './gse-editor.js';
-import './smv-editor.js';
-
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { OscdActionPane } from '@openenergytools/oscd-action-pane';
+import { newEditEventV2 } from '@omicronenergy/oscd-api/utils.js';
 import {
-  compareNames,
-  newCreateWizardEvent,
-  newEditWizardEvent,
-} from '../foundation.js';
+  newEditDialogCreateEvent,
+  newEditDialogEditEvent,
+} from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+
+import { compareNames } from '../foundation.js';
+import { GseEditor } from './GseEditor.js';
+import { SmvEditor } from './SmvEditor.js';
+import { ConnectedAPEditor } from './ConnectedapEditor.js';
 
 /** [[`Communication`]] subeditor for a `SubNetwork` element. */
-@customElement('subnetwork-editor')
-export class SubNetworkEditor extends LitElement {
+export class SubNetworkEditor extends ScopedElementsMixin(LitElement) {
+  static scopedElements = {
+    'oscd-action-pane': OscdActionPane,
+    'md-icon-button': MdIconButton,
+    'md-icon': MdIcon,
+    'smv-editor': SmvEditor,
+    'gse-editor': GseEditor,
+    'connectedap-editor': ConnectedAPEditor,
+  };
+
   @property({ attribute: false })
   doc!: XMLDocument;
 
@@ -62,23 +69,23 @@ export class SubNetworkEditor extends LitElement {
     return bitRateValue ? bitRateValue + unit : null;
   }
 
-  @query('.action.add') add!: IconButton;
+  @query('.action.add') add!: MdIconButton;
 
-  @query('.action.edit') edit!: IconButton;
+  @query('.action.edit') edit!: MdIconButton;
 
-  @query('.action.delete') delete!: IconButton;
+  @query('.action.delete') delete!: MdIconButton;
 
   private openCreateConnectedAPwizard(): void {
-    this.dispatchEvent(newCreateWizardEvent(this.element, 'ConnectedAP'));
+    this.dispatchEvent(newEditDialogCreateEvent(this.element, 'ConnectedAP'));
   }
 
   openEditWizard(): void {
-    this.dispatchEvent(newEditWizardEvent(this.element));
+    this.dispatchEvent(newEditDialogEditEvent(this.element));
   }
 
   removeElement(): void {
     if (this.element) {
-      this.dispatchEvent(newEditEvent({ node: this.element }));
+      this.dispatchEvent(newEditEventV2({ node: this.element }));
     }
   }
 
@@ -165,25 +172,25 @@ export class SubNetworkEditor extends LitElement {
   render(): TemplateResult {
     return html`<oscd-action-pane label="${this.header()}">
       <abbr slot="action" title="Edit">
-        <mwc-icon-button
+        <md-icon-button
           class="action edit"
-          icon="edit"
           @click=${() => this.openEditWizard()}
-        ></mwc-icon-button>
+          ><md-icon slot="icon">edit</md-icon></md-icon-button
+        >
       </abbr>
       <abbr slot="action" title="Remove">
-        <mwc-icon-button
+        <md-icon-button
           class="action delete"
-          icon="delete"
           @click=${() => this.removeElement()}
-        ></mwc-icon-button>
+          ><md-icon slot="icon">delete</md-icon></md-icon-button
+        >
       </abbr>
       <abbr slot="action" title="Add">
-        <mwc-icon-button
+        <md-icon-button
           class="action add"
-          icon="playlist_add"
           @click="${() => this.openCreateConnectedAPwizard()}"
-        ></mwc-icon-button>
+          ><md-icon slot="icon">playlist_add</md-icon></md-icon-button
+        >
       </abbr>
       <div id="iedContainer">${this.renderIEDs()}</div>
     </oscd-action-pane> `;

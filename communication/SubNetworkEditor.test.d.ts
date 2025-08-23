@@ -1,1 +1,1 @@
-import './SubetworkEditor.js';
+export {};

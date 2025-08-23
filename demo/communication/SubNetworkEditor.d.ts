@@ -1,16 +1,13 @@
 import { LitElement, TemplateResult } from 'lit';
 import { MdIconButton } from '@scopedelement/material-web/iconbutton/MdIconButton.js';
+import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 import { OscdActionPane } from '@openenergytools/oscd-action-pane';
-import './ConnectedapEditor.js';
-import './GseEditor.js';
-import './SmvEditor.js';
+import { GseEditor } from './GseEditor.js';
 import { SmvEditor } from './SmvEditor.js';
 import { ConnectedAPEditor } from './ConnectedapEditor.js';
-import { GseEditor } from './GseEditor.js';
-import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
-declare const SubnetworkEditor_base: typeof LitElement & import("@open-wc/scoped-elements/lit-element.js").ScopedElementsHostConstructor;
+declare const SubNetworkEditor_base: typeof LitElement & import("@open-wc/scoped-elements/lit-element.js").ScopedElementsHostConstructor;
 /** [[`Communication`]] subeditor for a `SubNetwork` element. */
-export declare class SubnetworkEditor extends SubnetworkEditor_base {
+export declare class SubNetworkEditor extends SubNetworkEditor_base {
     static scopedElements: {
         'oscd-action-pane': typeof OscdActionPane;
         'md-icon-button': typeof MdIconButton;

@@ -1,1 +1,1 @@
-import './GseEditor.js';
+export {};

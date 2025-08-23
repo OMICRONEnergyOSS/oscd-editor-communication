@@ -1,1 +1,1 @@
-import './SmvEditor.js';
+export {};

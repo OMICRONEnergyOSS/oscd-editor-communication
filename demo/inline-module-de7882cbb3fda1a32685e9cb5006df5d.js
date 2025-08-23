@@ -51768,6 +51768,23 @@ __decorate([
     n$3({ type: Number })
 ], OscdActionPane.prototype, "level", void 0);
 
+function compareNames(a, b) {
+    return a.localeCompare(b);
+}
+function getChildElementsByTagName(element, tag) {
+    if (!element || !tag) {
+        return [];
+    }
+    return Array.from(element.children).filter(child => child.tagName === tag);
+}
+function createElement(doc, tag, attrs) {
+    const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
+    Object.entries(attrs)
+        .filter(([_, value]) => value !== null)
+        .forEach(([name, value]) => element.setAttribute(name, value));
+    return element;
+}
+
 // import '@material/md-icon';
 /**
  * @slot action - May contain up to eight icon buttons.
@@ -52016,62 +52033,6 @@ __decorate([
     n$3({ type: Boolean })
 ], OscdActionIcon.prototype, "hideActions", void 0);
 
-/** [[`Communication`]] subeditor for a `ConnectedAP` element. */
-class ConnectedAPEditor extends ScopedElementsMixin(i$3) {
-    /** ConnectedAP attribute apName */
-    get label() {
-        return this.element.getAttribute('apName');
-    }
-    openEditWizard() {
-        this.dispatchEvent(newEditDialogEditEvent(this.element));
-    }
-    removeElement() {
-        if (this.element) {
-            this.dispatchEvent(newEditEventV2({ node: this.element }));
-        }
-    }
-    render() {
-        return x ` <oscd-action-icon
-      label="${this.label}"
-      icon="settings_input_hdmi"
-      ><md-fab slot="action" mini style="opacity:0;"></md-fab>
-      <md-fab slot="action" mini style="opacity:0;"></md-fab>
-      <md-fab
-        class="action edit"
-        slot="action"
-        mini
-        @click="${() => this.openEditWizard()}"
-        ><md-icon slot="icon">edit</md-icon></md-fab
-      >
-      <md-fab
-        class="action delete"
-        slot="action"
-        mini
-        @click="${() => this.removeElement()}"
-        ><md-icon slot="icon">delete</md-icon></md-fab
-      >
-      ></oscd-action-icon
-    >`;
-    }
-}
-ConnectedAPEditor.scopedElements = {
-    'md-fab': MdFab,
-    'md-icon': MdIcon,
-    'oscd-action-icon': OscdActionIcon,
-};
-__decorate([
-    n$3({ attribute: false })
-], ConnectedAPEditor.prototype, "element", void 0);
-__decorate([
-    r$1()
-], ConnectedAPEditor.prototype, "label", null);
-__decorate([
-    e$3('.action.edit')
-], ConnectedAPEditor.prototype, "edit", void 0);
-__decorate([
-    e$3('.action.delete')
-], ConnectedAPEditor.prototype, "delete", void 0);
-
 const sizableGooseIcon = b `<svg viewBox="0 0 24 24">
 <path fill="currentColor" d="M11,7H15V9H11V15H13V11H15V15A2,2 0 0,1 13,17H11A2,2 0 0,1 9,15V9A2,2 0 0,1 11,7M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" />
 </svg>`;
@@ -52191,25 +52152,64 @@ __decorate([
     e$3('.action.delete')
 ], SmvEditor.prototype, "delete", void 0);
 
-function compareNames(a, b) {
-    return a.localeCompare(b);
-}
-function getChildElementsByTagName(element, tag) {
-    if (!element || !tag) {
-        return [];
+/** [[`Communication`]] subeditor for a `ConnectedAP` element. */
+class ConnectedAPEditor extends ScopedElementsMixin(i$3) {
+    /** ConnectedAP attribute apName */
+    get label() {
+        return this.element.getAttribute('apName');
     }
-    return Array.from(element.children).filter(child => child.tagName === tag);
+    openEditWizard() {
+        this.dispatchEvent(newEditDialogEditEvent(this.element));
+    }
+    removeElement() {
+        if (this.element) {
+            this.dispatchEvent(newEditEventV2({ node: this.element }));
+        }
+    }
+    render() {
+        return x ` <oscd-action-icon
+      label="${this.label}"
+      icon="settings_input_hdmi"
+      ><md-fab slot="action" mini style="opacity:0;"></md-fab>
+      <md-fab slot="action" mini style="opacity:0;"></md-fab>
+      <md-fab
+        class="action edit"
+        slot="action"
+        mini
+        @click="${() => this.openEditWizard()}"
+        ><md-icon slot="icon">edit</md-icon></md-fab
+      >
+      <md-fab
+        class="action delete"
+        slot="action"
+        mini
+        @click="${() => this.removeElement()}"
+        ><md-icon slot="icon">delete</md-icon></md-fab
+      >
+      ></oscd-action-icon
+    >`;
+    }
 }
-function createElement(doc, tag, attrs) {
-    const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
-    Object.entries(attrs)
-        .filter(([_, value]) => value !== null)
-        .forEach(([name, value]) => element.setAttribute(name, value));
-    return element;
-}
+ConnectedAPEditor.scopedElements = {
+    'md-fab': MdFab,
+    'md-icon': MdIcon,
+    'oscd-action-icon': OscdActionIcon,
+};
+__decorate([
+    n$3({ attribute: false })
+], ConnectedAPEditor.prototype, "element", void 0);
+__decorate([
+    r$1()
+], ConnectedAPEditor.prototype, "label", null);
+__decorate([
+    e$3('.action.edit')
+], ConnectedAPEditor.prototype, "edit", void 0);
+__decorate([
+    e$3('.action.delete')
+], ConnectedAPEditor.prototype, "delete", void 0);
 
 /** [[`Communication`]] subeditor for a `SubNetwork` element. */
-class SubnetworkEditor extends ScopedElementsMixin(i$3) {
+class SubNetworkEditor extends ScopedElementsMixin(i$3) {
     constructor() {
         super(...arguments);
         this.editCount = -1;
@@ -52326,7 +52326,7 @@ class SubnetworkEditor extends ScopedElementsMixin(i$3) {
     </oscd-action-pane> `;
     }
 }
-SubnetworkEditor.scopedElements = {
+SubNetworkEditor.scopedElements = {
     'oscd-action-pane': OscdActionPane,
     'md-icon-button': MdIconButton,
     'md-icon': MdIcon,
@@ -52334,7 +52334,7 @@ SubnetworkEditor.scopedElements = {
     'gse-editor': GseEditor,
     'connectedap-editor': ConnectedAPEditor,
 };
-SubnetworkEditor.styles = i$6 `
+SubNetworkEditor.styles = i$6 `
     #iedContainer {
       display: grid;
       box-sizing: border-box;
@@ -52367,34 +52367,34 @@ SubnetworkEditor.styles = i$6 `
   `;
 __decorate([
     n$3({ attribute: false })
-], SubnetworkEditor.prototype, "doc", void 0);
+], SubNetworkEditor.prototype, "doc", void 0);
 __decorate([
     n$3({ type: Number })
-], SubnetworkEditor.prototype, "editCount", void 0);
+], SubNetworkEditor.prototype, "editCount", void 0);
 __decorate([
     n$3({ attribute: false })
-], SubnetworkEditor.prototype, "element", void 0);
+], SubNetworkEditor.prototype, "element", void 0);
 __decorate([
     r$1()
-], SubnetworkEditor.prototype, "name", null);
+], SubNetworkEditor.prototype, "name", null);
 __decorate([
     r$1()
-], SubnetworkEditor.prototype, "desc", null);
+], SubNetworkEditor.prototype, "desc", null);
 __decorate([
     r$1()
-], SubnetworkEditor.prototype, "type", null);
+], SubNetworkEditor.prototype, "type", null);
 __decorate([
     r$1()
-], SubnetworkEditor.prototype, "bitrate", null);
+], SubNetworkEditor.prototype, "bitrate", null);
 __decorate([
     e$3('.action.add')
-], SubnetworkEditor.prototype, "add", void 0);
+], SubNetworkEditor.prototype, "add", void 0);
 __decorate([
     e$3('.action.edit')
-], SubnetworkEditor.prototype, "edit", void 0);
+], SubNetworkEditor.prototype, "edit", void 0);
 __decorate([
     e$3('.action.delete')
-], SubnetworkEditor.prototype, "delete", void 0);
+], SubNetworkEditor.prototype, "delete", void 0);
 
 class OscdEditorCommunication extends ScopedElementsMixin(i$3) {
     constructor() {
@@ -52471,7 +52471,7 @@ class OscdEditorCommunication extends ScopedElementsMixin(i$3) {
 OscdEditorCommunication.scopedElements = {
     'md-icon': MdIcon,
     'md-fab': MdFab,
-    'subnetwork-editor': SubnetworkEditor,
+    'subnetwork-editor': SubNetworkEditor,
     'oscd-edit-dialog': OscdEditDialog,
 };
 OscdEditorCommunication.styles = i$6 `

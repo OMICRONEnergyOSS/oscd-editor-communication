@@ -1,5 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { expect, fixture, html } from '@open-wc/testing';
+import { fixture, html } from '@open-wc/testing';
+import {
+  // suite,
+  // test,
+  // assert,
+  expect,
+  // beforeAll,
+  // afterAll,
+  beforeEach,
+  afterEach,
+  // vi,
+} from 'vitest';
 import { SinonSpy, spy } from 'sinon';
 
 import { isInsert } from '@openenergytools/scl-lib/dist/foundation/utils.js';

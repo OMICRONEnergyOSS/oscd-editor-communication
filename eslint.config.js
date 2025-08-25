@@ -74,6 +74,8 @@ export default [
             'eslint.config.js',
             'rollup.config.js',
             'web-test-runner.config.js',
+            'vite.config.js',
+            'vitest.config.js',
             'web-dev-server.*',
           ],
         },

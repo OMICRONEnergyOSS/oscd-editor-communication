@@ -63,4 +63,22 @@ export default defineConfig({
       allow: [path.resolve(__dirname), path.resolve(__dirname, 'node_modules')],
     },
   },
+  test: {
+    /*
+     * Currently tests won't run, primarilly because of the dependency on scl-lib and how its using fetch to load nsd.json
+     * Vite doesn't seem interested in supporting this kind of dynamic imports, so if we want to use Vite we need to change
+     * this, as work arounds are not the way forward.
+     */
+    include: ['./*.spec.ts'],
+    globals: true,
+    coverage: {
+      reporter: ['text', 'html'],
+    },
+
+    browser: {
+      enabled: true,
+      provider: 'playwright',
+      instances: [{ browser: 'chromium' }],
+    },
+  },
 });

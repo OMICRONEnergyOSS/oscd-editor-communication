@@ -22,7 +22,7 @@ export const plugins = {
       translations: { de: 'Datei speichern' },
       icon: 'save',
       requireDoc: true,
-      tagName: 'oscd-editor-communication',
+      tagName: 'oscd-menu-save',
     },
   ],
   editor: [

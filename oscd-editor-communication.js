@@ -40531,21 +40531,21 @@ class SubNetworkEditor extends ScopedElementsMixin(i$3) {
         <md-icon-button
           class="action edit"
           @click=${() => this.openEditWizard()}
-          ><md-icon slot="icon">edit</md-icon></md-icon-button
+          ><md-icon>edit</md-icon></md-icon-button
         >
       </abbr>
       <abbr slot="action" title="Remove">
         <md-icon-button
           class="action delete"
           @click=${() => this.removeElement()}
-          ><md-icon slot="icon">delete</md-icon></md-icon-button
+          ><md-icon>delete</md-icon></md-icon-button
         >
       </abbr>
       <abbr slot="action" title="Add">
         <md-icon-button
           class="action add"
           @click="${() => this.openCreateConnectedAPwizard()}"
-          ><md-icon slot="icon">playlist_add</md-icon></md-icon-button
+          ><md-icon>playlist_add</md-icon></md-icon-button
         >
       </abbr>
       <div id="iedContainer">${this.renderIEDs()}</div>

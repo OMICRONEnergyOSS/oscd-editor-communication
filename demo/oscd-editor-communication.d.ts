@@ -1,7 +1,7 @@
 import { LitElement, TemplateResult } from 'lit';
 import { MdFab } from '@scopedelement/material-web/fab/MdFab.js';
 import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
-import OscdEditDialog from '@omicronenergy/oscd-edit-dialog/OscdEditDialog.js';
+import OscdEditDialog from '@omicronenergy/oscd-scl-dialogs/OscdSclDialogs.js';
 import { SubNetworkEditor } from './communication/SubNetworkEditor.js';
 declare const OscdEditorCommunication_base: typeof LitElement & import("@open-wc/scoped-elements/lit-element.js").ScopedElementsHostConstructor;
 export default class OscdEditorCommunication extends OscdEditorCommunication_base {

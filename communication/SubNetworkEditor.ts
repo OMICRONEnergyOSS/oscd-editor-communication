@@ -10,7 +10,7 @@ import { newEditEventV2 } from '@omicronenergy/oscd-api/utils.js';
 import {
   newEditDialogCreateEvent,
   newEditDialogEditEvent,
-} from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+} from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 
 import { compareNames } from '../foundation.js';
 import { GseEditor } from './GseEditor.js';

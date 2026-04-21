@@ -2,12 +2,17 @@ import OscdMenuOpen from '@omicronenergy/oscd-menu-open';
 import OscdMenuSave from '@omicronenergy/oscd-menu-save';
 import OscdBackgroundEditV1 from '@omicronenergy/oscd-background-editv1';
 
-customElements.define('oscd-menu-open', OscdMenuOpen);
-customElements.define('oscd-menu-save', OscdMenuSave);
-customElements.define('oscd-background-editv1', OscdBackgroundEditV1);
-
 import OscdEditorCommunication from '../oscd-editor-communication.js';
-customElements.define('oscd-editor-communication', OscdEditorCommunication);
+
+const oscdShell = document.querySelector('oscd-shell');
+const registry = oscdShell?.registry;
+if (!registry) {
+  throw new Error('No registry found on oscd-shell');
+}
+registry.define('oscd-menu-open', OscdMenuOpen);
+registry.define('oscd-menu-save', OscdMenuSave);
+registry.define('oscd-editor-communication', OscdEditorCommunication);
+registry.define('oscd-background-editv1', OscdBackgroundEditV1);
 
 export const plugins = {
   menu: [
@@ -24,6 +29,15 @@ export const plugins = {
       requireDoc: true,
       tagName: 'oscd-menu-save',
     },
+    {
+      name: 'Validating',
+      translations: {
+        de: 'Validieren',
+      },
+      icon: 'rule_folder',
+      requireDoc: true,
+      src: 'https://omicronenergyoss.github.io/oscd-menu-validate/oscd-menu-validate.js',
+    },
   ],
   editor: [
     {
@@ -32,6 +46,13 @@ export const plugins = {
       icon: 'settings_ethernet',
       requireDoc: true,
       tagName: 'oscd-editor-communication',
+    },
+    {
+      name: 'Source Editor',
+      translations: { de: 'Source Editor' },
+      icon: 'data_object',
+      requireDoc: true,
+      src: 'https://omicronenergyoss.github.io/oscd-editor-source/oscd-editor-source.js',
     },
   ],
   background: [

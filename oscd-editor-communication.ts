@@ -7,19 +7,20 @@ import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 
 import { getReference } from '@openenergytools/scl-lib';
 import { newEditEventV2 } from '@omicronenergy/oscd-api/utils.js';
-import OscdEditDialog from '@omicronenergy/oscd-edit-dialog/OscdEditDialog.js';
+import OscdEditDialog from '@omicronenergy/oscd-scl-dialogs/OscdSclDialogs.js';
 import type {
   CreateWizard,
   EditWizard,
-} from '@omicronenergy/oscd-edit-dialog/OscdEditDialog.js';
+} from '@omicronenergy/oscd-scl-dialogs/OscdSclDialogs.js';
 
 import {
   newEditDialogCreateEvent,
   OscdEditDialogEvents,
-} from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+} from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 
 import { SubNetworkEditor } from './communication/SubNetworkEditor.js';
 import { createElement, getChildElementsByTagName } from './foundation.js';
+import { EditV2 } from '@omicronenergy/oscd-api';
 
 export default class OscdEditorCommunication extends ScopedElementsMixin(
   LitElement,
@@ -46,14 +47,14 @@ export default class OscdEditorCommunication extends ScopedElementsMixin(
     this.addEventListener(OscdEditDialogEvents.CREATE_EVENT, ((
       event: CustomEvent<CreateWizard>,
     ) => {
-      this.editDialog?.create(event.detail).then(edits => {
+      this.editDialog?.create(event.detail).then((edits: EditV2) => {
         this.dispatchEvent(newEditEventV2(edits));
       });
     }) as EventListener);
     this.addEventListener(OscdEditDialogEvents.EDIT_EVENT, ((
       event: CustomEvent<EditWizard>,
     ) => {
-      this.editDialog?.edit(event.detail).then(edits => {
+      this.editDialog?.edit(event.detail).then((edits: EditV2) => {
         this.dispatchEvent(newEditEventV2(edits));
       });
     }) as EventListener);

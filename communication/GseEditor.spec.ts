@@ -8,7 +8,7 @@ import { isRemove } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 import { docBlob } from '../communication.testfiles.js';
 
 import { GseEditor } from './GseEditor.js';
-import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 
 customElements.define('gse-editor', GseEditor);
 

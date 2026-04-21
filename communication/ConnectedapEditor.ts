@@ -6,7 +6,7 @@ import { MdFab } from '@scopedelement/material-web/fab/MdFab.js';
 import { OscdActionIcon } from '@openenergytools/oscd-action-icon';
 
 import { newEditEventV2 } from '@omicronenergy/oscd-api/utils.js';
-import { newEditDialogEditEvent } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+import { newEditDialogEditEvent } from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 

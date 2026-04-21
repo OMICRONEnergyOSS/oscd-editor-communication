@@ -8,7 +8,7 @@ import { isRemove } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 import { docBlob } from '../communication.testfiles.js';
 
 import { ConnectedAPEditor } from './ConnectedapEditor.js';
-import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 customElements.define('connectedap-editor', ConnectedAPEditor);
 
 const connAp = new DOMParser()

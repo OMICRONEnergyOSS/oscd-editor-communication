@@ -7,7 +7,7 @@ import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 import { MdFab } from '@scopedelement/material-web/fab/MdFab.js';
 import { OscdActionIcon } from '@openenergytools/oscd-action-icon';
 
-import { newEditDialogEditEvent } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+import { newEditDialogEditEvent } from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 
 export const sizableSmvIcon = svg`
   <svg viewBox="0 0 24 24">

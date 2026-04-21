@@ -7,7 +7,7 @@ import { isInsert } from '@openenergytools/scl-lib/dist/foundation/utils.js';
 import { docBlob, missingCommunication } from './communication.testfiles.js';
 
 import OscdEditorCommunication from './oscd-editor-communication.js';
-import { OscdEditDialogEvents } from '@omicronenergy/oscd-edit-dialog/oscd-edit-dialog-events.js';
+import { OscdEditDialogEvents } from '@omicronenergy/oscd-scl-dialogs/oscd-scl-dialogs-events.js';
 
 const doc = new DOMParser().parseFromString(docBlob, 'application/xml');
 const missComm = new DOMParser().parseFromString(

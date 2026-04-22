@@ -4,6 +4,17 @@ import OscdBackgroundEditV1 from '@omicronenergy/oscd-background-editv1';
 
 import OscdEditorCommunication from '../oscd-editor-communication.js';
 
+const originalDefine = customElements.define.bind(customElements);
+customElements.define = (name, constructor) => {
+  if (customElements.get(name)) {
+    console.info(
+      `Custom element ${name} is already defined, skipping definition.`,
+    );
+    return;
+  }
+  return originalDefine(name, constructor);
+};
+
 const oscdShell = document.querySelector('oscd-shell');
 const registry = oscdShell?.registry;
 if (!registry) {

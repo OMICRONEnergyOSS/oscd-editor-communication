@@ -3,6 +3,7 @@
      version="2007"
      revision="B"
      release="4">
+  <Header id="demo"></Header>
   <Substation name="S1">
     <VoltageLevel name="V1">
       <Bay name="PUB"/>
@@ -14,13 +15,10 @@
       <BitRate unit="b/s" multiplier="M">100</BitRate>
       <ConnectedAP iedName="PUB_A" apName="AP1">
         <GSE ldInst="LD_A" cbName="GCB_A">
-          <!-- Is it valid to have a GSE address, but not a ConnectedAP address? It doesn't appear to work as expected. If the GSE Address is added but no ConnectedAP address, then the GSE address gets removed. Harsh!-->
-          <!-- Not only does the GSE address block get removed, the ConnectedAP address the user just added, doesn't actually get added. With the GSE address block removed, then adding the ConnecteAP address works (second time round)-->
-          <!-- Adding a GSE afterwards, works as expected and all further edits seem to work normally. -->
-          <!-- <Address>
+          <Address>
             <P type="MAC-Address">01-0C-CD-01-00-01</P>
             <P type="APPID">0001</P>
-          </Address> -->
+          </Address>
           <MinTime unit="s" multiplier="m">10</MinTime>
           <MaxTime unit="s" multiplier="m">1000</MaxTime>
         </GSE>

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.2](https://github.com/OMICRONEnergyOSS/oscd-editor-communication/compare/oscd-editor-communication-v0.0.1...oscd-editor-communication-v0.0.2) (2026-04-22)
+
+
+### Bug Fixes
+
+* 'ConnectedAP' edits should always change the correct Address ([204e0db](https://github.com/OMICRONEnergyOSS/oscd-editor-communication/commit/204e0db0300ef9ce738e9339cdfe47019c4a7674))
+
 ## 0.0.1 (2026-04-21)
 
 
